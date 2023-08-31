@@ -19,11 +19,11 @@ public class ExaminerServiceImpl implements ExaminerService {
     @Override
     public Collection<Question> getQuestions(int amount) {
         Set<Question> questions = new HashSet<>();
-        while (questions.size() < amount) {
-            questions.add(questionService.getRandomQuestion());
-        }
         if (questionService.getAll().stream().distinct().count() > amount) {
             throw new QuestionAmountExceeded("THERE ARE NO MORE QUESTIONS");
+        }
+        while (questions.size() < amount) {
+            questions.add(questionService.getRandomQuestion());
         }
         return questions;
     }

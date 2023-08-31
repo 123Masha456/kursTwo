@@ -19,9 +19,7 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question add(String question, String answer) {
-        var questionEntity = new Question(question, answer);
-        add(questionEntity);
-        return questionEntity;
+        return add(new Question(question,answer));
     }
 
     @Override
@@ -32,10 +30,9 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question remove(Question question) {
-        if (!questionList.contains(question)) {
+        if (!questionList.remove(question)) {
             throw new QuestionNotFoundException("QUESTION NOT FOUND");
         }
-        questionList.remove(question);
         return question;
     }
 
@@ -46,6 +43,9 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
+        if(questionList.isEmpty()){
+            throw new QuestionNotFoundException("QUESTION NOT FOUND");
+        }
         return questionList.get(random.nextInt(questionList.size()));
     }
 }

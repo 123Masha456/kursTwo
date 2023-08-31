@@ -3,6 +3,7 @@ package com.kurstwo.kursTwo;
 import com.kurstwo.kursTwo.dto.Question;
 import com.kurstwo.kursTwo.exceptions.QuestionNotFoundException;
 import com.kurstwo.kursTwo.services.implementations.JavaQuestionService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -16,6 +17,10 @@ public class JavaQuestionServiceTest {
     Question first = new Question("How many engines has Boeing 747?", "4");
     Question second = new Question("Do two plus two equals four", "Yes");
 
+    @BeforeEach
+    void setUp() {
+        underTest = new JavaQuestionService();
+    }
 
     @Test
     void addQuestion__questionAddedAndReturned() {
@@ -47,7 +52,14 @@ public class JavaQuestionServiceTest {
         underTest.add(second.getQuestion(), second.getAnswer());
         Collection<Question> result = underTest.getAll();
         assertEquals(List.of(first, second), result);
-        assertFalse(underTest.getAll().contains(Collections.emptyList()));
+        assertFalse(underTest.getAll().isEmpty());
+    }
+    @Test
+    void getRandomQuestion_listIsEmpty_thrownException(){
+        QuestionNotFoundException ex =
+                assertThrows(QuestionNotFoundException.class,
+        () -> underTest.getRandomQuestion());
+        assertEquals("QUESTION NOT FOUND", ex.getMessage());
     }
 
     @Test

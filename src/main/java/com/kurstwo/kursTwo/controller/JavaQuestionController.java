@@ -21,20 +21,17 @@ public class JavaQuestionController {
     }
 
     @GetMapping(path = "/add")
-    public ResponseEntity<Question> addQuestion(@RequestParam String question, @RequestParam String answer) {
-        var result = questionService.add(question, answer);
-        return new ResponseEntity<Question>(result, HttpStatus.OK);
+    public Question addQuestion(@RequestParam String question, @RequestParam String answer) {
+        return questionService.add(question, answer);
     }
 
     @GetMapping(path = "/remove")
-    public ResponseEntity<Question> removeQuestion(@RequestParam String question, @RequestParam String answer) {
-        var result = new Question(question, answer);
-        questionService.remove(result);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public Question removeQuestion(@RequestParam String question, @RequestParam String answer) {
+        return questionService.remove(new Question(question, answer));
     }
 
     @GetMapping()
-    public ResponseEntity<Collection<Question>> getAllQuestions() {
-        return new ResponseEntity<>(questionService.getAll(), HttpStatus.OK);
+    public Collection <Question> getAllQuestions() {
+        return questionService.getAll();
     }
 }
