@@ -2,7 +2,6 @@ package com.kurstwo.kursTwo;
 
 import com.kurstwo.kursTwo.dto.Question;
 import com.kurstwo.kursTwo.exceptions.QuestionAmountExceeded;
-import com.kurstwo.kursTwo.exceptions.QuestionNotFoundException;
 import com.kurstwo.kursTwo.services.implementations.ExaminerServiceImpl;
 import com.kurstwo.kursTwo.services.interfaces.QuestionService;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +36,7 @@ public class ExaminerServiceImplTest {
     @Test
     void getQuestions_amountIsActual_returnSetOfQuestions() {
         int amount = 3;
-        when(questionService.getRandomQuestion()).thenReturn(a,b,c,a,c,b);
+        when(questionService.getRandomQuestion()).thenReturn(a, b, c, a, c, b);
         Collection<Question> result = underTest.getQuestions(amount);
         assertEquals(amount, result.size());
         assertEquals(amount, result.stream().distinct().count());
@@ -45,12 +44,11 @@ public class ExaminerServiceImplTest {
 
     @Test
     void getQuestions_amountIsExceeded_thrownException() {
-        int amount = 5;
-        when(questionService.getRandomQuestion()).thenReturn(a,b,c,a,c,a);
-        Collection <Question> result = underTest.getQuestions(amount);
-        when(result.stream().distinct().count() < amount).thenReturn(?????????);
+        int amount = 10;
+        when(questionService.getAll()).thenReturn(questions);
         QuestionAmountExceeded ex =
-                assertThrows(QuestionAmountExceeded.class, () -> underTest.getQuestions(amount));
+                assertThrows(QuestionAmountExceeded.class,
+                        () -> underTest.getQuestions(amount));
         assertEquals("THERE ARE NO MORE QUESTIONS", ex.getMessage());
     }
 }

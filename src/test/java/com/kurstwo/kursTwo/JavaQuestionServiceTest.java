@@ -54,11 +54,12 @@ public class JavaQuestionServiceTest {
         assertEquals(List.of(first, second), result);
         assertFalse(underTest.getAll().isEmpty());
     }
+
     @Test
-    void getRandomQuestion_listIsEmpty_thrownException(){
+    void getRandomQuestion_listIsEmpty_thrownException() {
         QuestionNotFoundException ex =
                 assertThrows(QuestionNotFoundException.class,
-        () -> underTest.getRandomQuestion());
+                        () -> underTest.getRandomQuestion());
         assertEquals("QUESTION NOT FOUND", ex.getMessage());
     }
 
